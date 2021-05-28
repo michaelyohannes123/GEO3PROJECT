@@ -53,7 +53,7 @@ Associates, Inc.).
 
 The application data was based on
 [this](https://www.kaggle.com/sobhanmoosavi/us-accidents) nationwide
-dataset of 4.2 million accidents in the United States (from 2016-2020),
+dataset of 3 million accidents in the United States (from 2016-2020),
 which was developed by researchers at the Ohio State University. The
 accidents dataset was accumulated over that four year time span through
 retrieving real time traffic API data across the country. Each accident
