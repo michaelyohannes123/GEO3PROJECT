@@ -6,8 +6,6 @@ library(tidyverse)
 library(mapdeck)
 library(data.table)
 
-MAPBOX_KEY <- ""#"pk.eyJ1IjoiY29tbXRyYWNrZXIiLCJhIjoiY2ptajV6ZnNsMDZxMTN3cWx1azVnYnZpdyJ9.yu2bfOHMRKWjzGOIC-6Jgw"
-
 #read data in
 accidentsData <- get(load("US_Accidents_Dec20.RData"))
 placeNames <- unlist(accidentsData$`City, County, State`)
@@ -66,7 +64,7 @@ server <- function(input, output, session) {
     observeEvent(input$dataFocusBox, {
         output$gridMap <- renderMapdeck({
             #possible style args: “dark”, “light”, “outdoors”, “streets”, “satellite”, “satellite-streets”
-            mapdeck(token=MAPBOX_KEY, style = mapdeck_style("satellite-streets"))
+            mapdeck(token=Sys.getenv("MAPBOX_KEY"), style = mapdeck_style("satellite-streets"))
         })
         observeEvent(input$getData, {
             output$loadText <- renderText({paste("Retrieving Data...")})
@@ -142,11 +140,13 @@ server <- function(input, output, session) {
                         ylab_text=""
                         xlab_text=""
                         type = "bar"
+                        chartText = ""
                         if(input$dataFocusBox == "Severity"){
                             plot_data = data.frame(data_df$Severity) #table
                             title_text = "Accident Severity Distribution"
                             xlab_text = "Severity Rating"
                             ylab_text = "Number of Accidents"
+                            chartText = "Below is a bar chart depicting the distribution of accidents in terms of severity level. It's important to note severity level is in the context of an accident's impact on traffic."
                             to_plot <- as.data.frame(table(plot_data))
                             x_data <- to_plot$plot_data
                             y_data <- to_plot$Freq
@@ -156,6 +156,7 @@ server <- function(input, output, session) {
                             title_text = "Civil Twilight Distribution"
                             xlab_text = "Outside Conditions"
                             ylab_text = "Number of Accidents"
+                            chartText = "Below is a bar chart detailing the distribution of accidents in terms of civil twilight state during the accident."
                             to_plot <- as.data.frame(table(plot_data))
                             x_data <- to_plot$plot_data
                             y_data <- to_plot$Freq
@@ -164,6 +165,7 @@ server <- function(input, output, session) {
                             title_text = "Severity and Mean Temperature of Accidents"
                             xlab_text = "Severity Level"
                             ylab_text = "Mean Temperature (Farenheit)"
+                            chartText = "Below is a bar chart detailing the mean farenheit temperature during accidents in relation to severity level. This was made to assess if accidents of a higher severity occur in more extreme weather relative to the lower severity accidents."
                             temp_data <- data.frame(data_df$Temperature.F.)
                             sev_data <- data.frame(data_df$Severity)
                             sev_temp_table <- cbind(temp_data, sev_data)
@@ -179,7 +181,6 @@ server <- function(input, output, session) {
                                 }
                             }
                         }
-                        chartText <- ""
                         output$chartText <- renderText({paste(chartText)})
                         #create bar chart
                         output$plot <- renderPlotly({
