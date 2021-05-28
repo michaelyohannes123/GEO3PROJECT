@@ -9,7 +9,7 @@ library(data.table)
 MAPBOX_KEY <- ""#"pk.eyJ1IjoiY29tbXRyYWNrZXIiLCJhIjoiY2ptajV6ZnNsMDZxMTN3cWx1azVnYnZpdyJ9.yu2bfOHMRKWjzGOIC-6Jgw"
 
 #read data in
-accidentsData <- fread("C:/Users/miket/Downloads/GEO3PROJECT/US_Accidents_Dec20.csv")
+accidentsData <- get(load("US_Accidents_Dec20.RData"))
 placeNames <- unlist(accidentsData$`City, County, State`)
 projcrs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 dataFocuses <- c("General", "Severity", "Temperature.F.", "Civil_Twilight")
