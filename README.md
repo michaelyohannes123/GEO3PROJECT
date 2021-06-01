@@ -13,7 +13,7 @@ commands:
 library(shiny)
 runGitHub(repo = "GEO3PROJECT", username = "michaelyohannes123", subdir = "project", ref="main")
 ```
-Note that after running these commands, when the R Shiny application is loaded, the basemap of the heatmap visualization will not appear. To have it appear, download this project and modify line 67 of the app.R file (located in the main folder), by replacing "Sys.getenv("MAPBOX_KEY")" with your personal Mapbox API key. 
+Note that after running these commands, when the R Shiny application is loaded, the basemap of the heatmap visualization will not appear. To have it appear, download this project and modify line 67 of the app.R file (located in the project folder), by replacing "Sys.getenv("MAPBOX_KEY")" with your personal Mapbox API key. 
 
 ## Background
 
